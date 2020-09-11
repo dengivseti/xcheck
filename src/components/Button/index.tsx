@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const Button: React.FC = () => {
+export default function index() {
   return (
-    <>
-      <p>HEllo</p>
-    </>
+    <div>
+      <p>Hello</p>
+    </div>
   );
-};
+}
