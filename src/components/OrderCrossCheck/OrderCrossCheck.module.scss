@@ -1,0 +1,73 @@
+.root {
+  margin-bottom: 50px;
+}
+
+.container {
+  display: flex;
+}
+
+.taskMaxScore {
+  width: 80px;
+  margin: 15px 10px 0px 0;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 20px;
+  height: 100%;
+}
+
+.taskMaxScore span {
+  font-size: 10px;
+  line-height: 13px;
+  display: block;
+  text-align: center;
+  margin: 3px;
+}
+
+.taskMaxScore p {
+  text-align: center;
+  font-size: 35px;
+}
+
+.taskDescription {
+  padding: 15px 0;
+  width: 80%;
+  font-size: 20px;
+  line-height: 25px;
+  position: relative;
+
+}
+
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+.inputScope {
+  width: 300px;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 10px 50px;
+  justify-content: space-around;
+  //align-items: center;
+}
+
+.label {
+  display: block;
+}
+
+.label label {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.inputNumber {
+ height: 55px;
+  width: 80%;
+  font-size: 20px;
+  text-align: center;
+  line-height: 5px;
+
+}
