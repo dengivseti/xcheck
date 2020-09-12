@@ -3,6 +3,11 @@ import { Table } from 'antd';
 import { data } from './mockData';
 
 export const TableRequests: React.FC = () => {
+  const rowHandler = (event, record) => {
+    event.preventDefault();
+    console.log(record);
+  };
+
   const columns: any = [
     {
       title: 'ID',
@@ -49,7 +54,17 @@ export const TableRequests: React.FC = () => {
 
   return (
     <>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              rowHandler(event, record);
+            },
+          };
+        }}
+      />
     </>
   );
 };
