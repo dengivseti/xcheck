@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-
-import { Button } from 'antd';
-import { setUser } from '../../redux/slices/authSlice';
-import styles from './App.module.scss';
-import { Auth } from '../../pages/Auth';
+import { useRoutes } from '../../utils/routes';
+import { typeRoles } from '../../interfaces/interfaces';
 
 const App = () => {
   const dispatch = useDispatch();
+  const isAuthenticated = true;
+  const role: typeRoles = 'student';
 
-  return <Auth />;
+  const routes = useRoutes(isAuthenticated, role);
+
+  return <>{routes}</>;
 };
 export default App;
