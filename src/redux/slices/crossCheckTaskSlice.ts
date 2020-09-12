@@ -1,31 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../store';
 import {
-  ICrossCheckItem,
-  ICrossCheckOrder,
   ITaskItem,
+  ITaskOrderItems,
+  ITaskItemObj,
 } from '../../interfaces/interfaces';
 
-interface ITaskItemCheck {
-  [key: string]: ITaskItem;
-}
-
-interface ICrossCheckState {
-  items: ICrossCheckOrder;
+interface ITaskState {
+  items: ITaskItemObj;
   isLoading: boolean;
   task: string;
   total_score: number;
   score: number;
-  task_items: ITaskItemCheck;
+  task_items: ITaskOrderItems;
+  withSelfGrade: boolean;
+  taskItemsSelfGrade?: ITaskOrderItems;
 }
 
-const initialState: ICrossCheckState = {
+const initialState: ITaskState = {
   items: {},
   isLoading: false,
   task: '',
   score: 0,
   total_score: 0,
   task_items: {},
+  withSelfGrade: false,
+  taskItemsSelfGrade: {},
 };
 
 interface solutionItem {
@@ -38,10 +38,10 @@ const crossCheckTask = createSlice({
   name: 'crossCheckTask',
   initialState,
   reducers: {
-    getcrossCheckTaskStart(state) {
+    getTaskStart(state) {
       state.isLoading = true;
     },
-    setSolution(state, action: PayloadAction<ITaskItemCheck>) {
+    setSolution(state, action: PayloadAction<ITaskOrderItems>) {
       state.task_items = action.payload;
     },
     editItemsSolution(state, action: PayloadAction<solutionItem>) {
@@ -64,45 +64,79 @@ const crossCheckTask = createSlice({
     setTask(state, action: PayloadAction<string>) {
       state.task = action.payload;
     },
-    setTaskOrder(state, action: PayloadAction<ICrossCheckOrder>) {
+    setTaskOrder(state, action: PayloadAction<ITaskItemObj>) {
       state.isLoading = false;
       state.items = action.payload;
     },
     setTotalScore(state, action: PayloadAction<number>) {
       state.total_score = action.payload;
     },
+    setSelfGrade(state, action: PayloadAction<boolean>) {
+      state.withSelfGrade = action.payload;
+    },
+    setTaskItemsSelfGrade(state, action: PayloadAction<ITaskOrderItems>) {
+      state.taskItemsSelfGrade = action.payload;
+    },
   },
 });
 
 export const {
-  getcrossCheckTaskStart,
+  getTaskStart,
   setScore,
   setTask,
   editItemsSolution,
   setTotalScore,
   setTaskOrder,
   setSolution,
+  setSelfGrade,
+  setTaskItemsSelfGrade,
 } = crossCheckTask.actions;
 export default crossCheckTask.reducer;
 
-export const fetchCrossCheckTask = (): AppThunk => async (dispatch) => {
-  const obj: ICrossCheckOrder = {};
-  const objSolution: ITaskItemCheck = {};
+export const fetchTask = (taskId: string = null): AppThunk => async (
+  dispatch
+) => {
+  let itemsSelfGrade = {};
+  const obj: ITaskItemObj = {};
+  const objSolution: ITaskOrderItems = {};
   let score = 0;
-  dispatch(getcrossCheckTaskStart());
+  let checkScore = 0;
+  dispatch(getTaskStart());
+  if (taskId) {
+    dispatch(setSelfGrade(true));
+    const items = selfGrade.items;
+    if (items) {
+      itemsSelfGrade = { ...items };
+      console.log('itemsSelfGrade', itemsSelfGrade);
+    }
+    dispatch(setTaskItemsSelfGrade(itemsSelfGrade));
+  } else {
+    dispatch(setSelfGrade(false));
+  }
   await setTimeout(() => {
     const task = testTask;
-    task['items'].forEach((item: ICrossCheckItem) => {
+    task['items'].forEach((item: ITaskItem) => {
       obj[item.order]
         ? (obj[item.order] = [...obj[item.order], item])
         : (obj[item.order] = [item]);
-      objSolution[item.id] = { score: 0, comment: '' };
+      if (taskId) {
+        objSolution[item.id] = {
+          score: itemsSelfGrade[item.id] ? itemsSelfGrade[item.id].score : 0,
+          comment: '',
+        };
+        checkScore += itemsSelfGrade[item.id]
+          ? itemsSelfGrade[item.id].score
+          : 0;
+      } else {
+        objSolution[item.id] = { score: 0, comment: '' };
+      }
       score += item.maxScore;
     });
     dispatch(setSolution(objSolution));
     dispatch(setTask(task['id']));
     dispatch(setTotalScore(score));
     dispatch(setTaskOrder(obj));
+    dispatch(setScore(checkScore));
   }, 1000);
 };
 
@@ -190,4 +224,19 @@ const testTask = {
       description: 'Description 111',
     },
   ],
+};
+
+const selfGrade = {
+  taskId: 'simple-task-v1',
+  items: {
+    id_1: { score: 20, comment: 'Well done!' },
+    id_2: { score: 20, comment: 'Some things are done, some are not' },
+    id_3: { score: 70, comment: 'No ticket today' },
+    id_21: { score: 20, comment: 'No ticket today' },
+    id_22: { score: 40, comment: 'Some things are done, some are not' },
+    id_23: { score: 20, comment: 'Well done!' },
+    id_31: { score: 120, comment: 'No ticket today' },
+    id_32: { score: 20, comment: 'Some things are done, some are not' },
+    id_33: { score: 50, comment: 'Well done!' },
+  },
 };

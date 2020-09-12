@@ -1,34 +1,38 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { debounce } from 'lodash';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { OrderCrossCheck } from '../../components/OrderCrossCheck';
 import { Button, Form, Typography } from 'antd';
 import { RootState } from '../../redux/rootReducer';
 import {
-  fetchCrossCheckTask,
-  sendTaskItems,
-  setTotalScore,
+  fetchTask,
   editItemsSolution,
 } from '../../redux/slices/crossCheckTaskSlice';
 
 export const CrossCheck: React.FC = () => {
   const dispatch = useDispatch();
-  const { isLoading, objOrder, objCheck, score, totalScore } = useSelector(
-    (state: RootState) => {
-      return {
-        isLoading: state.crossCheckTask.isLoading,
-        objOrder: state.crossCheckTask.items,
-        objCheck: state.crossCheckTask.task_items,
-        score: state.crossCheckTask.score,
-        totalScore: state.crossCheckTask.total_score,
-      };
-    },
-    shallowEqual
-  );
+  const {
+    isLoading,
+    objOrder,
+    objCheck,
+    score,
+    totalScore,
+    taskItemsSelfGrade,
+  } = useSelector((state: RootState) => {
+    return {
+      isLoading: state.crossCheckTask.isLoading,
+      objOrder: state.crossCheckTask.items,
+      objCheck: state.crossCheckTask.task_items,
+      score: state.crossCheckTask.score,
+      totalScore: state.crossCheckTask.total_score,
+      withSelfGrade: state.crossCheckTask.withSelfGrade,
+      taskItemsSelfGrade: state.crossCheckTask.taskItemsSelfGrade,
+    };
+  }, shallowEqual);
 
   useEffect(() => {
     if (Object.keys(objOrder).length === 0) {
-      dispatch(fetchCrossCheckTask());
+      dispatch(fetchTask('5'));
     }
   }, [dispatch]);
 
@@ -60,6 +64,7 @@ export const CrossCheck: React.FC = () => {
           <OrderCrossCheck
             key={item}
             items={objOrder[item]}
+            taskSelfGrade={taskItemsSelfGrade}
             name={item}
             onComment={debounceSolutionHandler}
             onScore={debounceSolutionHandler}

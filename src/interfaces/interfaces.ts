@@ -10,12 +10,12 @@ export interface IAuthValue {
   role: typeRoles;
 }
 
-export interface IItemTaskScore {
+export interface ITaskItemScore {
   score: number;
   comment: string;
 }
 
-export interface ICrossCheckItem {
+export interface ITaskItem {
   id: string;
   title: string;
   minScore: number;
@@ -24,15 +24,10 @@ export interface ICrossCheckItem {
   description: string;
 }
 
-export interface ICrossCheckOrder {
-  [key: string]: ICrossCheckItem[];
+export interface ITaskItemObj {
+  [key: string]: ITaskItem[];
 }
 
-export interface ITaskItem {
-  score: number;
-  comment: string;
-}
-
-export interface ICrossCheckItems {
-  items: ICrossCheckItem;
+export interface ITaskOrderItems {
+  [key: string]: ITaskItemScore;
 }

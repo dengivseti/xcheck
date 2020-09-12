@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { ICrossCheckItem } from '../../interfaces/interfaces';
+import React from 'react';
+import { ITaskItem, ITaskOrderItems } from '../../interfaces/interfaces';
 import { Divider, Form, Input, InputNumber, Space, Typography } from 'antd';
 import classes from './OrderCrossCheck.module.scss';
 
 interface IOrderProps {
-  items: ICrossCheckItem[];
+  items: ITaskItem[];
+  taskSelfGrade: ITaskOrderItems;
   name: string;
   onScore(IScoreObj): void;
   onComment(ICommentObj): void;
@@ -12,6 +13,7 @@ interface IOrderProps {
 
 export const OrderCrossCheck: React.FC<IOrderProps> = ({
   items,
+  taskSelfGrade,
   name,
   onScore,
   onComment,
@@ -45,7 +47,11 @@ export const OrderCrossCheck: React.FC<IOrderProps> = ({
                   onComment({ id: item.id, comment: event.target.value })
                 }
                 className={classes.textarea}
-                placeholder="Комментарий"
+                placeholder={
+                  taskSelfGrade[item.id]
+                    ? taskSelfGrade[item.id].comment
+                    : 'Комментарий'
+                }
               />
             </Form.Item>
           </div>
@@ -54,6 +60,9 @@ export const OrderCrossCheck: React.FC<IOrderProps> = ({
               className={classes.label}
               name={[item.id, 'score']}
               label="Ваша оценка"
+              initialValue={
+                taskSelfGrade[item.id] ? taskSelfGrade[item.id].score : 0
+              }
               rules={[
                 {
                   type: 'number',
@@ -69,7 +78,11 @@ export const OrderCrossCheck: React.FC<IOrderProps> = ({
                 min={item.minScore}
                 max={item.maxScore}
                 className={classes.inputNumber}
-                placeholder="Оценка"
+                placeholder={
+                  taskSelfGrade[item.id]
+                    ? taskSelfGrade[item.id].score.toString()
+                    : '0'
+                }
                 onChange={(event: number) =>
                   onScore({ id: item.id, score: event })
                 }
