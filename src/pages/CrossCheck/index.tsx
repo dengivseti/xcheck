@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { debounce } from 'lodash';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { OrderCrossCheck } from '../../components/OrderCrossCheck';
+import { Order } from '../../components/Order';
 import { Button, Form, Typography } from 'antd';
 import { RootState } from '../../redux/rootReducer';
 import {
@@ -32,7 +32,7 @@ export const CrossCheck: React.FC = () => {
 
   useEffect(() => {
     if (Object.keys(objOrder).length === 0) {
-      dispatch(fetchTask('5'));
+      dispatch(fetchTask());
     }
   }, [dispatch]);
 
@@ -61,11 +61,11 @@ export const CrossCheck: React.FC = () => {
       </Typography.Title>
       <Form name="form_cross_check" onFinish={onFinish} autoComplete="off">
         {Object.keys(objOrder).map((item) => (
-          <OrderCrossCheck
-            key={item}
+          <Order
             items={objOrder[item]}
             taskSelfGrade={taskItemsSelfGrade}
             name={item}
+            type="EDIT"
             onComment={debounceSolutionHandler}
             onScore={debounceSolutionHandler}
           />

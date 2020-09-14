@@ -8,12 +8,15 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/history": "^4.7.7",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "antd": "^4.6.2",
+    "axios": "^0.20.0",
     "customize-cra": "^1.0.0",
+    "history": "^5.0.0",
     "less": "^3.12.2",
     "less-loader": "^7.0.1",
     "lodash": "^4.17.20",
@@ -24,6 +27,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
+    "shortid": "^2.2.15",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -49,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "babel-plugin-import": "^1.13.0",

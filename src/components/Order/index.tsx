@@ -1,9 +1,14 @@
 import React from 'react';
-import { ITaskItem, ITaskOrderItems } from '../../interfaces/interfaces';
-import { Divider, Form, Input, InputNumber, Space, Typography } from 'antd';
-import classes from './OrderCrossCheck.module.scss';
+import {
+  ITaskItem,
+  ITaskOrderItems,
+  typeGrade,
+} from '../../interfaces/interfaces';
+import { Divider, Form, Input, InputNumber, Typography } from 'antd';
+import classes from './Order.module.scss';
 
 interface IOrderProps {
+  type: typeGrade;
   items: ITaskItem[];
   taskSelfGrade: ITaskOrderItems;
   name: string;
@@ -11,10 +16,11 @@ interface IOrderProps {
   onComment(ICommentObj): void;
 }
 
-export const OrderCrossCheck: React.FC<IOrderProps> = ({
+export const Order: React.FC<IOrderProps> = ({
   items,
   taskSelfGrade,
   name,
+  type,
   onScore,
   onComment,
 }) => {
@@ -22,7 +28,7 @@ export const OrderCrossCheck: React.FC<IOrderProps> = ({
   items.forEach((item) => (maxScore += item.maxScore));
   return (
     <div className={classes.root}>
-      <Typography.Title level={2} mark={true}>
+      <Typography.Title level={4}>
         {name}: {maxScore} баллов.
       </Typography.Title>
       <Divider />
@@ -35,6 +41,9 @@ export const OrderCrossCheck: React.FC<IOrderProps> = ({
           <div className={classes.taskDescription}>
             <p>{item.description}</p>
             <Form.Item
+              initialValue={
+                taskSelfGrade[item.id] ? taskSelfGrade[item.id].comment : null
+              }
               name={[item.id, 'comment']}
               rules={[
                 {
