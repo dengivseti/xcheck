@@ -4,19 +4,20 @@ import {
   SET_ROLE,
   SET_USER,
 } from '../../utils/constants/reducers';
+import { typeRoles } from '../../interfaces/interfaces';
 
 interface authState {
   isLoading: true | false;
   isLogined: true | false;
   user: string | null;
-  role: string;
+  role: typeRoles;
 }
 
 const initialState: authState = {
   isLoading: false,
   isLogined: false,
-  user: null,
-  role: '',
+  user: 'dengivseti',
+  role: 'student',
 };
 
 const authSlice = createSlice({

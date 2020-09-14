@@ -9,16 +9,21 @@ export const Layouts: React.FC = (props) => {
   return (
     <Layout className={classes.layout}>
       <Sider theme="light">
-        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1">
+        <Menu
+          theme="light"
+          mode="inline"
+          // TODO проработать selectedKeys
+          // selectedKeys={[props.location.pathname]}
+        >
+          <Menu.Item key="/tasks">
             <span>Задачи</span>
             <Link to="/tasks" />
           </Menu.Item>
-          <Menu.Item key="2">
+          <Menu.Item key="/task/create">
             <span>Создать задачу</span>
             <Link to="/task/create" />
           </Menu.Item>
-          <Menu.Item key="3">
+          <Menu.Item key="/requests">
             <span>Запросы на проверку</span>
             <Link to="/requests" />
           </Menu.Item>
