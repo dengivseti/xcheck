@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { fetchListTasks } from '../../redux/slices/listTasksSlice';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/rootReducer';
 import { Loader } from '../../components/Loader';
 import { ITask } from '../../interfaces/interfaces';
@@ -19,7 +19,7 @@ export const ListTask: React.FC = () => {
       isLoading: state.listTasks.isLoading,
       tasks: state.listTasks.tasks,
     };
-  }, shallowEqual);
+  });
 
   useEffect(() => {
     dispatch(fetchListTasks());
@@ -34,7 +34,7 @@ export const ListTask: React.FC = () => {
     switch (role) {
       case 'student':
         console.log('На страницу создания задачи на проверку');
-        history.push(`/request/create/${id}`);
+        history.push(`/task/${id}`);
         return;
       case 'author':
         console.log('На страницу редактирования задачи');

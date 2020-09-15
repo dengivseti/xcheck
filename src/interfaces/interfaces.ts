@@ -2,6 +2,12 @@ export type typeRoles = 'student' | 'author' | 'supervisor';
 export type typeTaskState = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 export type typeReviewRequest = 'DRAFT' | 'PUBLISHED' | 'COMPLETED';
 export type typeGrade = 'SELFGRADE' | 'EDIT' | 'REVIEW';
+export type typeReview =
+  | 'DRAFT'
+  | 'PUBLISHED'
+  | 'DISPUTED'
+  | 'ACCEPTED'
+  | 'REJECTED';
 export type typeColorAction =
   | 'success'
   | 'processing'
@@ -29,6 +35,17 @@ export interface IReviewRequest {
   selfGrade: ITaskOrderItems;
 }
 
+export interface IReview {
+  id?: string | number;
+  crossCheckSessionId: string;
+  idTask: string;
+  idRequest: string;
+  author: string;
+  score: number;
+  state: typeReview;
+  grade: ITaskOrderItems;
+}
+
 export interface ISelectTypeRoles {
   name: string;
   value: typeRoles;
@@ -43,6 +60,12 @@ export interface ISelectTypeStateTask {
 export interface ISelectTypeStateRequest {
   name: string;
   value: typeReviewRequest;
+  color?: typeColorAction;
+}
+
+export interface ISelectTypeStateReviews {
+  name: string;
+  value: typeReview;
   color?: typeColorAction;
 }
 

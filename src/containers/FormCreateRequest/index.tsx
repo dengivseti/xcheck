@@ -51,16 +51,16 @@ export const FormCreateRequest: React.FC = () => {
       items: store.formCreateRequest.items,
       typeRequest: store.formCreateRequest.type,
       selfGrade: store.formCreateRequest.selfGrade,
-      idRequest: store.formCreateRequest.idRequest,
+      idRequest: store.formCreateRequest.id,
     };
   }, shallowEqual);
 
   useEffect(() => {
-    dispatch(fetchTask(params.id));
+    dispatch(fetchTask(params.id, author));
   }, []);
 
-  const onFinish = (value) => {
-    dispatch(
+  const onFinish = async (value) => {
+    await dispatch(
       sendReviewRequest(
         {
           author,
@@ -75,7 +75,7 @@ export const FormCreateRequest: React.FC = () => {
         idRequest
       )
     );
-    history.push('/tasks');
+    history.push('/requests');
   };
 
   if (isLoading) {
@@ -83,7 +83,12 @@ export const FormCreateRequest: React.FC = () => {
   }
   return (
     <Form layout="horizontal" onFinish={onFinish} autoComplete="off">
-      <Typography.Title>Запрос на проверку {titleTask}</Typography.Title>
+      <Typography.Title>
+        {typeRequest === 'EDIT'
+          ? 'Редактировать запрос на проверку'
+          : 'Запрос на проверку'}{' '}
+        {titleTask}
+      </Typography.Title>
       <h2>Статус</h2>
       <Form.Item
         initialValue={state}
@@ -118,7 +123,7 @@ export const FormCreateRequest: React.FC = () => {
       <Grade type={typeRequest} items={items} grade={selfGrade} />
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Оформить
+          {typeRequest === 'EDIT' ? 'Редактировать' : 'Отправить'}
         </Button>
       </Form.Item>
     </Form>

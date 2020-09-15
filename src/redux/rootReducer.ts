@@ -3,15 +3,21 @@ import authReducer from './slices/authSlice';
 import crossCheckTaskReducer from './slices/crossCheckTaskSlice';
 import formCreateTaskReducer from './slices/formCreateTaskSlice';
 import listTasksReducer from './slices/listTasksSlice';
+import listRequestsReducer from './slices/listRequestsSlice';
 import formCreateRequestReducer from './slices/formCreateRequestSlice';
 import gradeReducer from './slices/GradeSlice';
+import formReviewReducer from './slices/formReviewSlice';
+import listReviewsReducer from './slices/listReviewsSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   crossCheckTask: crossCheckTaskReducer,
   formCreateTask: formCreateTaskReducer,
-  listTasks: listTasksReducer,
   formCreateRequest: formCreateRequestReducer,
+  formCreateReview: formReviewReducer,
+  listTasks: listTasksReducer,
+  listRequests: listRequestsReducer,
+  listReviews: listReviewsReducer,
   grade: gradeReducer,
 });
 

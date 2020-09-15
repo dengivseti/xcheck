@@ -14,7 +14,6 @@ interface IRequestState {
   isLoading: boolean;
   idTask: string | number;
   url: string;
-  idRequest?: string | number;
   crossCheckSessionId: null | string;
   titleTask: string;
   author: string;
@@ -22,6 +21,7 @@ interface IRequestState {
   selfGrade: ITaskOrderItems;
   items: ITaskItem[];
   score: number;
+  id: string;
 }
 
 interface IfetchProps {
@@ -37,12 +37,12 @@ const initialState: IRequestState = {
   idTask: '',
   crossCheckSessionId: '',
   titleTask: '',
-  author: ',',
+  author: '',
   state: 'DRAFT',
   selfGrade: {},
   items: [],
   score: 0,
-  idRequest: 0,
+  id: '',
 };
 const url = process.env.REACT_APP_URI_DB;
 const formCreateRequest = createSlice({
@@ -57,6 +57,7 @@ const formCreateRequest = createSlice({
       state.items = [];
       state.score = 0;
       state.state = 'DRAFT';
+      state.type = 'SELFGRADE';
     },
     setFetchStart(state) {
       state.isLoading = true;
@@ -90,7 +91,10 @@ const formCreateRequest = createSlice({
       state.type = action.payload;
     },
     setIdRequest(state, action: PayloadAction<string>) {
-      state.idRequest = action.payload;
+      state.id = action.payload;
+    },
+    setScore(state, action: PayloadAction<number>) {
+      state.score = action.payload;
     },
   },
 });
@@ -107,10 +111,13 @@ export const {
   setType,
   setIdRequest,
   setClear,
+  setScore,
 } = formCreateRequest.actions;
 export default formCreateRequest.reducer;
 
-export const fetchTask = (id: string): AppThunk => async (dispatch) => {
+export const fetchTask = (id: string, user: string): AppThunk => async (
+  dispatch
+) => {
   dispatch(setClear());
   dispatch(setFetchStart());
   const responseTask = await axios.get(`${url}tasks/${id}`);
@@ -119,14 +126,21 @@ export const fetchTask = (id: string): AppThunk => async (dispatch) => {
     dispatch(setFetchFinish());
     return;
   }
-  const findRequest = await axios.get(`${url}requests?idTask=${id}`);
+  let findRequest;
+  if (user) {
+    findRequest = await axios.get(`${url}requests?idTask=${id}&author=${user}`);
+  } else {
+    findRequest = await axios.get(`${url}requests?idTask=${id}`);
+  }
+
   if (findRequest.data && findRequest.data.length) {
-    console.log(findRequest.data[0]);
     dispatch(setState(findRequest.data[0].state));
     dispatch(setUrl(findRequest.data[0].url));
     dispatch(setSelfGrade(findRequest.data[0].selfGrade));
     dispatch(setType('EDIT'));
     dispatch(setIdRequest(findRequest.data[0].id));
+    dispatch(setAuthor(findRequest.data[0].author));
+    dispatch(setScore(findRequest.data[0].score));
   }
 
   dispatch(
@@ -145,7 +159,6 @@ export const sendReviewRequest = (
 ): AppThunk => async (dispatch) => {
   let response;
   if (type === 'EDIT' && idRequest) {
-    console.log('обновляес таск', idRequest);
     response = await axios.patch(`${url}requests/${idRequest}`, value);
   } else {
     response = await axios.post(`${url}requests`, value);
@@ -155,6 +168,5 @@ export const sendReviewRequest = (
     //TODO обработать ошибки
     return;
   }
-
   dispatch(setClear());
 };

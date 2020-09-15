@@ -49,11 +49,8 @@ export const Grade: React.FC<IGradeProps> = ({
   );
 
   return (
-    <>
-      <h2>
-        Результат проверки {score}/{totalScore}
-      </h2>
-
+    <div>
+      <br />
       {Object.keys(sortItems).map((item) => (
         <Order
           key={item}
@@ -65,6 +62,9 @@ export const Grade: React.FC<IGradeProps> = ({
           onScore={debounceSolutionHandler}
         />
       ))}
-    </>
+      <h2>
+        Результат проверки {score}/{totalScore}
+      </h2>
+    </div>
   );
 };

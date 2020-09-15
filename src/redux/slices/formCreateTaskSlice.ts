@@ -64,9 +64,9 @@ export default formCreateTask.reducer;
 
 export const sendTask = (value): AppThunk => async (dispatch) => {
   dispatch(sendStart());
-  console.log('value', value);
   const response = await axios.post(`${url}tasks`, value);
   if (response.data) {
+    // TODO обработка ошибок
     console.log('RESPONSE:', response.data);
   }
   dispatch(sendFinish());

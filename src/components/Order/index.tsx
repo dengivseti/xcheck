@@ -28,10 +28,11 @@ export const Order: React.FC<IOrderProps> = ({
   items.forEach((item) => (maxScore += item.maxScore));
   return (
     <div className={classes.root}>
-      <Typography.Title level={4}>
-        {name}: {maxScore} баллов.
-      </Typography.Title>
-      <Divider />
+      <Divider orientation="left">
+        <Typography.Title level={4}>
+          {name}: {maxScore} баллов.
+        </Typography.Title>
+      </Divider>
       {items.map((item) => (
         <div key={item.id} className={classes.container}>
           <div className={classes.taskMaxScore}>
@@ -39,6 +40,7 @@ export const Order: React.FC<IOrderProps> = ({
             <p>{item.maxScore}</p>
           </div>
           <div className={classes.taskDescription}>
+            <p className={classes.bold}>{item.title}</p>
             <p>{item.description}</p>
             <Form.Item
               initialValue={

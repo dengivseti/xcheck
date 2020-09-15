@@ -15,6 +15,7 @@ import {
 import { Button, Form, Input, Select } from 'antd';
 import { listStateTask } from '../../utils/values';
 import classes from '../../components/FormCheckEdit/FormCheckEdit.module.scss';
+import { ITask } from '../../interfaces/interfaces';
 
 export const FormCreateTask: React.FC = () => {
   const history = useHistory();
@@ -42,7 +43,7 @@ export const FormCreateTask: React.FC = () => {
     dispatch(setAuthor(user));
   }, [user]);
 
-  const onFinish = (itemsForm) => {
+  const onFinish = async (itemsForm) => {
     console.log(itemsForm);
     if (!itemsForm.items) {
       // TODO
@@ -52,14 +53,14 @@ export const FormCreateTask: React.FC = () => {
     dispatch(setTitle(itemsForm.title));
     dispatch(setState(itemsForm.state));
     dispatch(setItems([...itemsForm.items]));
-    const value = {
+    const value: ITask = {
       title: itemsForm.title,
       author,
       categoriesOrder,
       state: itemsForm.state,
       items: [...itemsForm.items],
     };
-    dispatch(sendTask(value));
+    await dispatch(sendTask(value));
     history.push('/tasks');
   };
 
