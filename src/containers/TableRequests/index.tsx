@@ -3,8 +3,8 @@ import { Table, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '../../redux/rootReducer';
-import { fetchListRequests } from '../../redux/slices/listRequestsSlice';
-import { fetchListTasks } from '../../redux/slices/listTasksSlice';
+import { fetchRequests } from '../../redux/slices/listRequestsSlice';
+import { fetchTasks } from '../../redux/slices/listTasksSlice';
 import { Loader } from '../../components/Loader';
 import { listStateRequest } from '../../utils/values';
 import { IReviewRequest } from '../../interfaces/interfaces';
@@ -22,8 +22,8 @@ export const TableRequests: React.FC = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchListRequests());
-    dispatch(fetchListTasks());
+    dispatch(fetchRequests());
+    dispatch(fetchTasks());
   }, []);
 
   const rowHandler = (event, record: IReviewRequest) => {
@@ -32,7 +32,7 @@ export const TableRequests: React.FC = () => {
     if (record.author === user) {
       history.push(`/task/${record.idTask}`);
     } else {
-      history.push(`/review/${record.id}`);
+      history.push(`/request/${record.id}`);
     }
   };
 
@@ -69,9 +69,9 @@ export const TableRequests: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (idTask) => (
         <>
-          {tasks.map((task) => {
+          {tasks.map((task, int) => {
             if (task.id == idTask) {
-              return <>{task.title}</>;
+              return <div key={int}>{task.title}</div>;
             }
           })}
         </>
@@ -96,9 +96,13 @@ export const TableRequests: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (state) => (
         <>
-          {listStateRequest.map((item) => {
+          {listStateRequest.map((item, int) => {
             if (item.value === state) {
-              return <Tag color={item.color}>{item.name}</Tag>;
+              return (
+                <Tag key={int} color={item.color}>
+                  {item.name}
+                </Tag>
+              );
             }
           })}
         </>
@@ -115,6 +119,7 @@ export const TableRequests: React.FC = () => {
       <Table
         columns={columns}
         dataSource={requests}
+        rowKey={(request) => request.id}
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {

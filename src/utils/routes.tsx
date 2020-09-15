@@ -17,11 +17,12 @@ export const useRoutes = (isAuth: boolean, role: typeRoles) => {
     <Switch>
       <Layouts>
         <Route path="/tasks" exact component={Tasks} />
-        <Route path="/task/create" exact component={CreateTask} />
+        <Route path="/tasks/create" exact component={CreateTask} />
         <Route path="/task/:id" exact component={CreateRequest} />
         <Route path="/requests" exact component={Requests} />
         <Route path="/request/:id" exact component={ReviewRequest} />
         <Route path="/reviews" exact component={Reviews} />
+        <Route path="/review/:id" exact component={Reviews} />
         {/*<Route path="/task/edit/:id" exact component={} />*/}
         {/*<Route path="/crosscheck/create" exact component={} />*/}
         {/*<Route path="/request/edit/:id" exact component={} />*/}
