@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { fetchListTasks } from '../../redux/slices/listTasksSlice';
+import { fetchTasks } from '../../redux/slices/listTasksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/rootReducer';
 import { Loader } from '../../components/Loader';
@@ -22,7 +22,7 @@ export const ListTask: React.FC = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchListTasks());
+    dispatch(fetchTasks());
   }, []);
 
   if (isLoading) {

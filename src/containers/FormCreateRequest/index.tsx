@@ -75,7 +75,7 @@ export const FormCreateRequest: React.FC = () => {
         idRequest
       )
     );
-    history.push('/requests');
+    history.push('/reviews');
   };
 
   if (isLoading) {

@@ -20,28 +20,19 @@ import { ITask } from '../../interfaces/interfaces';
 export const FormCreateTask: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
-  const {
-    isLoading,
-    title,
-    state,
-    categoriesOrder,
-    items,
-    author,
-  } = useSelector((state: RootState) => {
-    return {
-      isLoading: state.formCreateTask.isLoading,
-      title: state.formCreateTask.title,
-      state: state.formCreateTask.state,
-      categoriesOrder: state.formCreateTask.categoriesOrder,
-      items: state.formCreateTask.items,
-      author: state.formCreateTask.author,
-    };
-  }, shallowEqual);
-
-  useEffect(() => {
-    dispatch(setAuthor(user));
-  }, [user]);
+  const author = useSelector((state: RootState) => state.auth.user);
+  const { isLoading, title, state, categoriesOrder, items } = useSelector(
+    (state: RootState) => {
+      return {
+        isLoading: state.formCreateTask.isLoading,
+        title: state.formCreateTask.title,
+        state: state.formCreateTask.state,
+        categoriesOrder: state.formCreateTask.categoriesOrder,
+        items: state.formCreateTask.items,
+      };
+    },
+    shallowEqual
+  );
 
   const onFinish = async (itemsForm) => {
     console.log(itemsForm);

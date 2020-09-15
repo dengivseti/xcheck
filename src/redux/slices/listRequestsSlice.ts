@@ -33,7 +33,7 @@ export const { setFetchStart, setRequests } = listRequests.actions;
 
 export default listRequests.reducer;
 
-export const fetchListRequests = (): AppThunk => async (dispatch) => {
+export const fetchRequests = (): AppThunk => async (dispatch) => {
   dispatch(setFetchStart());
   const response = await axios.get(`${url}requests`);
   if (!response.data) {

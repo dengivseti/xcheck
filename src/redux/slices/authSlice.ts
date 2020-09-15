@@ -17,7 +17,7 @@ const initialState: authState = {
   isLoading: false,
   isLogined: false,
   // user: 'semensemenich',
-  user: 'dengivseti',
+  user: 'dengivseti11',
   role: 'student',
 };
 
