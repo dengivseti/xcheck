@@ -4,24 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '../../redux/rootReducer';
 import { Loader } from '../../components/Loader';
-import { fetchTasks } from '../../redux/slices/listTasksSlice';
-import { fetchRequests } from '../../redux/slices/listRequestsSlice';
-import { fetchReviews } from '../../redux/slices/listReviewsSlice';
+import { fetchTasks, setTask } from '../../redux/slices/tasksSlice';
+import { fetchRequests, setRequest } from '../../redux/slices/requestsSlice';
+import { fetchReviews, setReview } from '../../redux/slices/reviewsSlice';
 import { IReview } from '../../interfaces/interfaces';
 import { listStateReviews } from '../../utils/values';
 
 export const TableReviews: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const tasks = useSelector((state: RootState) => state.listTasks.tasks);
-  const requests = useSelector(
-    (state: RootState) => state.listRequests.requests
-  );
+  const tasks = useSelector((state: RootState) => state.tasks.tasks);
+  const requests = useSelector((state: RootState) => state.requests.requests);
   const user = useSelector((state: RootState) => state.auth.user);
   const { isLoading, reviews } = useSelector((state: RootState) => {
     return {
-      isLoading: state.listReviews.isLoading,
-      reviews: state.listReviews.reviews,
+      isLoading: state.reviews.isLoading,
+      reviews: state.reviews.reviews,
     };
   });
 
@@ -33,12 +31,18 @@ export const TableReviews: React.FC = () => {
 
   const rowHandler = (event, record: IReview) => {
     event.preventDefault();
-    console.log(record);
-    // if (record.author === user) {
-    //   history.push(`/review/${record.id}`);
-    // } else {
-    //   history.push(`/review/${record.id}`);
-    // }
+    const selectTask = tasks.find((task) => task.id === +record.idTask);
+    const selectRequest = requests.find(
+      (request) => request.id === +record.idRequest
+    );
+    dispatch(setReview(record));
+    dispatch(setTask(selectTask));
+    dispatch(setRequest(selectRequest));
+    if (record.author === user) {
+      history.push(`/review/${record.id}/edit`);
+    } else if (record.author === selectRequest.author) {
+      history.push(`/review/${record.id}`);
+    }
   };
 
   const filter = (items, text, value) => {
@@ -70,7 +74,7 @@ export const TableReviews: React.FC = () => {
       render: (idTask) => (
         <>
           {tasks.map((task, int) => {
-            if (task.id == idTask) {
+            if (+task.id === +idTask) {
               return <div key={int}>{task.title}</div>;
             }
           })}

@@ -17,8 +17,9 @@ const initialState: authState = {
   isLoading: false,
   isLogined: false,
   // user: 'semensemenich',
-  user: 'dengivseti11',
+  user: 'dengivseti',
   role: 'student',
+  // role: 'author',
 };
 
 const authSlice = createSlice({

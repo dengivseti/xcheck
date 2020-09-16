@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { fetchTasks } from '../../redux/slices/listTasksSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { fetchTasks, setTask } from '../../redux/slices/tasksSlice';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../redux/rootReducer';
 import { Loader } from '../../components/Loader';
 import { ITask } from '../../interfaces/interfaces';
@@ -14,12 +14,13 @@ export const ListTask: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = useSelector((state: RootState) => state.auth.role);
+  const user = useSelector((state: RootState) => state.auth.user);
   const { isLoading, tasks } = useSelector((state: RootState) => {
     return {
-      isLoading: state.listTasks.isLoading,
-      tasks: state.listTasks.tasks,
+      isLoading: state.tasks.isLoading,
+      tasks: state.tasks.tasks,
     };
-  });
+  }, shallowEqual);
 
   useEffect(() => {
     dispatch(fetchTasks());
@@ -29,19 +30,21 @@ export const ListTask: React.FC = () => {
     return <Loader />;
   }
 
-  const taskHandler = (id) => {
+  const taskHandler = async (id) => {
     // TODO В зависимости от роли открывается либо страница с редактированием задачи либо создание запроса на проверку
+    const selectTask = tasks.find((task) => task.id === id);
+    dispatch(setTask(selectTask));
     switch (role) {
       case 'student':
-        console.log('На страницу создания задачи на проверку');
         history.push(`/task/${id}`);
         return;
       case 'author':
-        console.log('На страницу редактирования задачи');
-        return <Link to="/task/create" />;
+        if (selectTask.author === user) {
+          history.push(`/task/${id}/edit`);
+          return;
+        }
       default:
-        console.log('Ничего не происходит');
-        return <Link to="/task/create" />;
+        break;
     }
   };
 

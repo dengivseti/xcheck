@@ -1,10 +1,10 @@
 import React from 'react';
 import { FormReview } from '../../containers/FormReview';
 
-export const ReviewRequest: React.FC = () => {
+export const CreateReview: React.FC = () => {
   return (
     <>
-      <FormReview />
+      <FormReview isEdit={false} />
     </>
   );
 };

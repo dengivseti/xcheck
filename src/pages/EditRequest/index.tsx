@@ -1,10 +1,10 @@
 import React from 'react';
 import { FormRequest } from '../../containers/FormRequest';
 
-export const CreateRequest = () => {
+export const EditRequest = () => {
   return (
     <>
-      <FormRequest isEdit={false} />
+      <FormRequest isEdit={true} />
     </>
   );
 };

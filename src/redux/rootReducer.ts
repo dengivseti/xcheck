@@ -1,23 +1,16 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
-import crossCheckTaskReducer from './slices/crossCheckTaskSlice';
-import formCreateTaskReducer from './slices/formCreateTaskSlice';
-import listTasksReducer from './slices/listTasksSlice';
-import listRequestsReducer from './slices/listRequestsSlice';
-import formCreateRequestReducer from './slices/formCreateRequestSlice';
+import tasksReducer from './slices/tasksSlice';
+import requestsReducer from './slices/requestsSlice';
+
 import gradeReducer from './slices/GradeSlice';
-import formReviewReducer from './slices/formReviewSlice';
-import listReviewsReducer from './slices/listReviewsSlice';
+import reviewsReducer from './slices/reviewsSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  crossCheckTask: crossCheckTaskReducer,
-  formCreateTask: formCreateTaskReducer,
-  formCreateRequest: formCreateRequestReducer,
-  formCreateReview: formReviewReducer,
-  listTasks: listTasksReducer,
-  listRequests: listRequestsReducer,
-  listReviews: listReviewsReducer,
+  tasks: tasksReducer,
+  requests: requestsReducer,
+  reviews: reviewsReducer,
   grade: gradeReducer,
 });
 

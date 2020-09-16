@@ -71,7 +71,7 @@ export const setInitialValue = ({ items, grade, type }): AppThunk => (
   let score = 0;
   const sortItems: IGradeItems = {};
   const finalGrade: ITaskOrderItems = {};
-  items.forEach((item) => {
+  items.map((item) => {
     sortItems[item.order]
       ? (sortItems[item.order] = [...sortItems[item.order], item])
       : (sortItems[item.order] = [item]);

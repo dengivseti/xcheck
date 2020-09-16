@@ -6,8 +6,12 @@ import { Requests } from '../pages/Requests';
 import { Layouts } from '../components/Layout';
 import { CreateTask } from '../pages/CreateTask';
 import { CreateRequest } from '../pages/CreateRequest';
-import { ReviewRequest } from '../pages/ReviewRequest';
+import { CreateReview } from '../pages/CreateReview';
 import { Reviews } from '../pages/Reviews';
+import { CreateDispute } from '../pages/CreateDispute';
+import { EditTask } from '../pages/EditTask';
+import { EditRequest } from '../pages/EditRequest';
+import { EditReview } from '../pages/EditReview';
 
 export const useRoutes = (isAuth: boolean, role: typeRoles) => {
   if (!isAuth) {
@@ -18,11 +22,16 @@ export const useRoutes = (isAuth: boolean, role: typeRoles) => {
       <Layouts>
         <Route path="/tasks" exact component={Tasks} />
         <Route path="/tasks/create" exact component={CreateTask} />
+        <Route path="/task/:id/edit" exact component={EditTask} />
         <Route path="/task/:id" exact component={CreateRequest} />
         <Route path="/requests" exact component={Requests} />
-        <Route path="/request/:id" exact component={ReviewRequest} />
+        <Route path="/request/:id" exact component={CreateReview} />
+        <Route path="/request/:id/edit" exact component={EditRequest} />
+        <Route path="/review/:id/edit" exact component={EditReview} />
         <Route path="/reviews" exact component={Reviews} />
-        <Route path="/review/:id" exact component={Reviews} />
+        <Route path="/review/:id" exact component={CreateDispute} />
+        <Route path="/dispute/:id/edit" exact component={CreateDispute} />
+
         {/*<Route path="/task/edit/:id" exact component={} />*/}
         {/*<Route path="/crosscheck/create" exact component={} />*/}
         {/*<Route path="/request/edit/:id" exact component={} />*/}
@@ -30,7 +39,7 @@ export const useRoutes = (isAuth: boolean, role: typeRoles) => {
         {/*<Route path="/disputes" exact component={} />*/}
         {/*<Route path="/dispute/:id" exact component={} />*/}
         {/*<Redirect to="/tasks" />*/}
-        <Redirect to="/reviews" />
+        <Redirect to="/tasks" />
       </Layouts>
     </Switch>
   );

@@ -3,8 +3,8 @@ import { Table, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '../../redux/rootReducer';
-import { fetchRequests } from '../../redux/slices/listRequestsSlice';
-import { fetchTasks } from '../../redux/slices/listTasksSlice';
+import { fetchRequests, setRequest } from '../../redux/slices/requestsSlice';
+import { fetchTasks, setTask } from '../../redux/slices/tasksSlice';
 import { Loader } from '../../components/Loader';
 import { listStateRequest } from '../../utils/values';
 import { IReviewRequest } from '../../interfaces/interfaces';
@@ -12,12 +12,12 @@ import { IReviewRequest } from '../../interfaces/interfaces';
 export const TableRequests: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const tasks = useSelector((state: RootState) => state.listTasks.tasks);
+  const tasks = useSelector((state: RootState) => state.tasks.tasks);
   const user = useSelector((state: RootState) => state.auth.user);
   const { isLoading, requests } = useSelector((state: RootState) => {
     return {
-      isLoading: state.listRequests.isLoading,
-      requests: state.listRequests.requests,
+      isLoading: state.requests.isLoading,
+      requests: state.requests.requests,
     };
   });
 
@@ -28,9 +28,11 @@ export const TableRequests: React.FC = () => {
 
   const rowHandler = (event, record: IReviewRequest) => {
     event.preventDefault();
-    console.log(record);
+    const selectTask = tasks.find((task) => task.id === +record.idTask);
+    dispatch(setTask(selectTask));
+    dispatch(setRequest(record));
     if (record.author === user) {
-      history.push(`/task/${record.idTask}`);
+      history.push(`/request/${record.id}/edit`);
     } else {
       history.push(`/request/${record.id}`);
     }
@@ -70,7 +72,7 @@ export const TableRequests: React.FC = () => {
       render: (idTask) => (
         <>
           {tasks.map((task, int) => {
-            if (task.id == idTask) {
+            if (+task.id === +idTask) {
               return <div key={int}>{task.title}</div>;
             }
           })}

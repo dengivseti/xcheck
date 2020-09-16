@@ -21,7 +21,7 @@ export const FormCheckEdit: React.FC<IFormCheckProps> = ({
         {(fields, { add, remove }) => {
           return (
             <div>
-              {fields.map((field) => (
+              {fields.map((field, index) => (
                 <Space
                   // direction="vertical"
                   key={field.key}
@@ -38,7 +38,9 @@ export const FormCheckEdit: React.FC<IFormCheckProps> = ({
                     name={[field.name, 'id']}
                     fieldKey={[field.fieldKey, 'id']}
                     className={classes.hide}
-                    initialValue={shortid.generate()}
+                    initialValue={
+                      items[index] ? items[index].id : shortid.generate()
+                    }
                     rules={[{ required: true, message: 'Missing id' }]}
                   >
                     <Input
@@ -48,6 +50,7 @@ export const FormCheckEdit: React.FC<IFormCheckProps> = ({
                     />
                   </Form.Item>
                   <Form.Item
+                    initialValue={items[index] ? items[index].title : null}
                     className={classes.title}
                     {...field}
                     name={[field.name, 'title']}
@@ -60,6 +63,9 @@ export const FormCheckEdit: React.FC<IFormCheckProps> = ({
                   <Form.Item
                     {...field}
                     name={[field.name, 'order']}
+                    initialValue={
+                      items[index] ? items[index].order : categories[0]
+                    }
                     fieldKey={[field.fieldKey, 'order']}
                     rules={[{ required: true, message: 'Missing Order' }]}
                   >
@@ -74,6 +80,7 @@ export const FormCheckEdit: React.FC<IFormCheckProps> = ({
 
                   <Form.Item
                     {...field}
+                    initialValue={items[index] ? items[index].minScore : null}
                     name={[field.name, 'minScore']}
                     fieldKey={[field.fieldKey, 'minScore']}
                     rules={[
@@ -88,6 +95,7 @@ export const FormCheckEdit: React.FC<IFormCheckProps> = ({
                   </Form.Item>
                   <Form.Item
                     {...field}
+                    initialValue={items[index] ? items[index].maxScore : null}
                     name={[field.name, 'maxScore']}
                     fieldKey={[field.fieldKey, 'maxScore']}
                     rules={[
@@ -102,6 +110,9 @@ export const FormCheckEdit: React.FC<IFormCheckProps> = ({
                   </Form.Item>
                   <Form.Item
                     {...field}
+                    initialValue={
+                      items[index] ? items[index].description : null
+                    }
                     name={[field.name, 'description']}
                     fieldKey={[field.fieldKey, 'description']}
                     rules={[{ required: true, message: 'Missing description' }]}
