@@ -30,7 +30,6 @@ export const useRoutes = (isAuth: boolean, role: typeRoles) => {
         <Route path="/review/:id/edit" exact component={EditReview} />
         <Route path="/reviews" exact component={Reviews} />
         <Route path="/review/:id" exact component={CreateDispute} />
-        <Route path="/dispute/:id/edit" exact component={CreateDispute} />
 
         {/*<Route path="/task/edit/:id" exact component={} />*/}
         {/*<Route path="/crosscheck/create" exact component={} />*/}

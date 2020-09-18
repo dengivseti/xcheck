@@ -26,6 +26,7 @@ export const Order: React.FC<IOrderProps> = ({
 }) => {
   let maxScore = 0;
   items.forEach((item) => (maxScore += item.maxScore));
+
   return (
     <div className={classes.root}>
       <Divider orientation="left">

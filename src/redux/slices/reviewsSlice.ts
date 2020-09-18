@@ -67,8 +67,7 @@ export const fetchReview = (id: string): AppThunk => async (dispatch) => {
   dispatch(setFetchStart());
   const response = await axios.get(`${url}reviews/${id}`);
   if (!response.data) {
-    //TODO обработка ошибок
-    dispatch(setReviews([]));
+    //TODO обработка ошиб
     return;
   }
   await dispatch(fetchRequest(response.data.idRequest));
@@ -89,7 +88,6 @@ export const saveReview = (review: IReview): AppThunk => async (dispatch) => {
     // TODO обработка ошибок
     console.log('RESPONSE:', response.data);
   }
-
   dispatch(clearReview());
   dispatch(setFetchFinish());
 };

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from 'lodash';
 import { RootState } from '../../redux/rootReducer';
 import {
@@ -31,8 +31,7 @@ export const Grade: React.FC<IGradeProps> = ({
         totalScore: state.grade.totalScore,
         finalGrade: state.grade.finalGrade,
       };
-    },
-    shallowEqual
+    }
   );
 
   useEffect(() => {

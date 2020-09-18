@@ -66,7 +66,6 @@ export default grade.reducer;
 export const setInitialValue = ({ items, grade, type }): AppThunk => (
   dispatch
 ) => {
-  dispatch(setClear());
   let totalScore = 0;
   let score = 0;
   const sortItems: IGradeItems = {};

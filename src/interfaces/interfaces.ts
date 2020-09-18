@@ -8,6 +8,7 @@ export type typeReview =
   | 'DISPUTED'
   | 'ACCEPTED'
   | 'REJECTED';
+export type typeDispute = 'ONGOING' | 'ACCEPTED' | 'REJECTED';
 export type typeColorAction =
   | 'success'
   | 'processing'
@@ -27,7 +28,7 @@ export interface ITask {
 export interface IReviewRequest {
   id?: string | number;
   crossCheckSessionId: string;
-  idTask: string;
+  idTask: string | number;
   author: string;
   score: number;
   url: string;
@@ -37,13 +38,23 @@ export interface IReviewRequest {
 
 export interface IReview {
   id?: string | number;
-  crossCheckSessionId: string;
   idTask: string;
   idRequest: string;
   author: string;
   score: number;
   state: typeReview;
   grade: ITaskOrderItems;
+}
+
+export interface IDispute {
+  id?: number;
+  idReview: number | string;
+  idRequest: number | string;
+  idTask: number | string;
+  idem: string;
+  state: typeDispute;
+  comment: string;
+  suggestedScore: number;
 }
 
 export interface ISelectTypeRoles {
@@ -77,6 +88,15 @@ export interface IAuthValue {
 export interface ITaskItemScore {
   score: number;
   comment: string;
+}
+
+export interface IModalValue {
+  idReview: number | string;
+  idRequest: number | string;
+  idTask: number | string;
+  idem: string;
+  min: number;
+  max: number;
 }
 
 export interface ITaskItem {

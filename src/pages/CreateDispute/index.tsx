@@ -1,10 +1,10 @@
 import React from 'react';
-import { FormCreateDispute } from '../../containers/FormCreateDispute';
+import { FormDispute } from '../../containers/FormDispute';
 
 export const CreateDispute: React.FC = () => {
   return (
     <>
-      <FormCreateDispute />
+      <FormDispute />
     </>
   );
 };

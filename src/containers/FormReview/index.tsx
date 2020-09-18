@@ -48,7 +48,6 @@ export const FormReview: React.FC<IFormReviewProps> = (props) => {
   const onFinish = async (value) => {
     const result: IReview = {
       author,
-      crossCheckSessionId: request.crossCheckSessionId,
       idRequest: request.id,
       idTask: request.idTask,
       score,
@@ -62,6 +61,11 @@ export const FormReview: React.FC<IFormReviewProps> = (props) => {
   useEffect(() => {
     if (!task && !request && !review) {
       dispatch(fetchReview(params.id));
+      if (isEdit) {
+        dispatch(fetchRequest(params.id));
+      }
+    }
+    if (review && review.id !== params.id) {
       if (isEdit) {
         dispatch(fetchRequest(params.id));
       }

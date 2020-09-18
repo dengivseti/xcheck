@@ -7,7 +7,7 @@ import { Loader } from '../../components/Loader';
 import { fetchTasks, setTask } from '../../redux/slices/tasksSlice';
 import { fetchRequests, setRequest } from '../../redux/slices/requestsSlice';
 import { fetchReviews, setReview } from '../../redux/slices/reviewsSlice';
-import { IReview } from '../../interfaces/interfaces';
+import { IReview, ITaskItem } from '../../interfaces/interfaces';
 import { listStateReviews } from '../../utils/values';
 
 export const TableReviews: React.FC = () => {
@@ -40,7 +40,7 @@ export const TableReviews: React.FC = () => {
     dispatch(setRequest(selectRequest));
     if (record.author === user) {
       history.push(`/review/${record.id}/edit`);
-    } else if (record.author === selectRequest.author) {
+    } else if (user === selectRequest.author) {
       history.push(`/review/${record.id}`);
     }
   };
@@ -98,7 +98,7 @@ export const TableReviews: React.FC = () => {
     {
       title: 'Author Request',
       dataIndex: 'idRequest',
-      sorter: (a: any, b: any) => a.author.length - b.author.length,
+      sorter: (a: any, b: any) => a.idRequest - b.idRequest,
       sortDirections: ['descend', 'ascend'],
       render: (idRequest) => (
         <>

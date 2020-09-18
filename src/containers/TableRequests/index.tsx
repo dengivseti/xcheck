@@ -3,8 +3,14 @@ import { Table, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '../../redux/rootReducer';
-import { fetchRequests, setRequest } from '../../redux/slices/requestsSlice';
+import {
+  fetchRequests,
+  setRequest,
+  clearRequest,
+} from '../../redux/slices/requestsSlice';
 import { fetchTasks, setTask } from '../../redux/slices/tasksSlice';
+import { setReview, fetchReviews } from '../../redux/slices/reviewsSlice';
+import { setClear } from '../../redux/slices/GradeSlice';
 import { Loader } from '../../components/Loader';
 import { listStateRequest } from '../../utils/values';
 import { IReviewRequest } from '../../interfaces/interfaces';
@@ -14,6 +20,7 @@ export const TableRequests: React.FC = () => {
   const history = useHistory();
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
   const user = useSelector((state: RootState) => state.auth.user);
+  const reviews = useSelector((state: RootState) => state.reviews.reviews);
   const { isLoading, requests } = useSelector((state: RootState) => {
     return {
       isLoading: state.requests.isLoading,
@@ -22,15 +29,26 @@ export const TableRequests: React.FC = () => {
   });
 
   useEffect(() => {
+    dispatch(setClear());
+    dispatch(clearRequest());
     dispatch(fetchRequests());
+    dispatch(fetchReviews());
     dispatch(fetchTasks());
   }, []);
 
-  const rowHandler = (event, record: IReviewRequest) => {
+  const rowHandler = async (event, record: IReviewRequest) => {
     event.preventDefault();
     const selectTask = tasks.find((task) => task.id === +record.idTask);
+    const findReview = reviews.find(
+      (review) => review.author === user && review.idRequest === record.id
+    );
     dispatch(setTask(selectTask));
     dispatch(setRequest(record));
+    if (findReview && findReview.author) {
+      await dispatch(setReview(findReview));
+      history.push(`/review/${findReview.id}/edit`);
+      return;
+    }
     if (record.author === user) {
       history.push(`/request/${record.id}/edit`);
     } else {

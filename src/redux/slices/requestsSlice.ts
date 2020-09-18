@@ -2,12 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../store';
 import axios from 'axios';
 import { IReviewRequest } from '../../interfaces/interfaces';
-import {
-  clearTask,
-  fetchTask,
-  getFetchFinish,
-  getFetchStart,
-} from './tasksSlice';
+import { fetchTask, getFetchFinish, getFetchStart } from './tasksSlice';
 
 interface IRequestsState {
   isLoading: boolean;
@@ -50,7 +45,6 @@ const requests = createSlice({
 export const {
   setFetchStart,
   setRequests,
-  setFetchFinish,
   clearRequest,
   setRequest,
 } = requests.actions;
@@ -75,7 +69,6 @@ export const fetchRequest = (id: string): AppThunk => async (dispatch) => {
     //TODO обработка ошибок
     return;
   }
-  console.log(response.data);
   await fetchTask(response.data.idTask);
   dispatch(setRequest(response.data));
 };
