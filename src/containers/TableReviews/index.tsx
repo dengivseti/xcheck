@@ -76,7 +76,7 @@ export const TableReviews: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (idTask) => (
         <>
-          {tasks.forEach((task, int) => {
+          {tasks.map((task, int) => {
             if (+task.id === +idTask) {
               return <div key={int}>{task.title}</div>;
             }
@@ -105,7 +105,7 @@ export const TableReviews: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (idRequest) => (
         <>
-          {requests.forEach((request) => {
+          {requests.map((request) => {
             if (request.id === idRequest) {
               return <div key={request.id}>{request.author}</div>;
             }
@@ -120,7 +120,7 @@ export const TableReviews: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (idRequest) => (
         <>
-          {requests.forEach((request) => {
+          {requests.map((request) => {
             if (request.id === idRequest) {
               return <div key={request.id}>{request.score}</div>;
             }
@@ -143,7 +143,7 @@ export const TableReviews: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (state) => (
         <>
-          {listStateReviews.forEach((item, int) => {
+          {listStateReviews.map((item, int) => {
             if (item.value === state) {
               return (
                 <Tag key={int} color={item.color}>

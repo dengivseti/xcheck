@@ -89,7 +89,7 @@ export const TableRequests: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (idTask) => (
         <>
-          {tasks.forEach((task, int) => {
+          {tasks.map((task, int) => {
             if (+task.id === +idTask) {
               return <div key={int}>{task.title}</div>;
             }
@@ -116,7 +116,7 @@ export const TableRequests: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (state) => (
         <>
-          {listStateRequest.forEach((item, int) => {
+          {listStateRequest.map((item, int) => {
             if (item.value === state) {
               return (
                 <Tag key={int} color={item.color}>
