@@ -2,8 +2,11 @@ import React from 'react';
 import { Layout, Menu } from 'antd';
 import classes from './Layout.module.scss';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/slices/authSlice';
 
 export const Layouts: React.FC = (props) => {
+  const dispatch = useDispatch();
   const { Content, Sider } = Layout;
   const location = useLocation();
 
@@ -30,6 +33,9 @@ export const Layouts: React.FC = (props) => {
           <Menu.Item key="/disputes">
             <span>Споры</span>
             <Link to="/disputes" />
+          </Menu.Item>
+          <Menu.Item key="/logout" onClick={() => dispatch(logout())}>
+            <span>Выход</span>
           </Menu.Item>
         </Menu>
       </Sider>

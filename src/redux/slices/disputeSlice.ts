@@ -69,7 +69,6 @@ export const fetchDisputes = (): AppThunk => async (dispatch) => {
   dispatch(setFetchStart());
   const response = await axios.get(`${url}disputes/`);
   if (!response.data) {
-    //TODO обработка ошибок
     dispatch(setDisputes([]));
     return;
   }
@@ -80,7 +79,6 @@ export const fetchDispute = (id: string): AppThunk => async (dispatch) => {
   dispatch(setFetchStart());
   const response = await axios.get(`${url}disputes/${id}`);
   if (!response.data) {
-    //TODO обработка ошиб
     return;
   }
   await dispatch(fetchReview(response.data.idReview));
@@ -93,14 +91,11 @@ export const saveDispute = (dispute: IDispute): AppThunk => async (
   dispatch(setFetchStart());
   let response;
   if (!dispute.id) {
-    console.log('Сохраняем новый диспут');
     response = await axios.post(`${url}disputes`, dispute);
   } else {
-    console.log('Редактируем старый диспут');
     response = await axios.patch(`${url}disputes/${dispute.id}`, dispute);
   }
   if (response.data) {
-    // TODO обработка ошибок
     console.log('RESPONSE:', response.data);
   }
   dispatch(clearDispute());
