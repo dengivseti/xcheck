@@ -30,6 +30,10 @@ export const Layouts: React.FC = (props) => {
             <span>Оценки</span>
             <Link to="/reviews" />
           </Menu.Item>
+          <Menu.Item key="/disputes">
+            <span>Споры</span>
+            <Link to="/disputes" />
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>

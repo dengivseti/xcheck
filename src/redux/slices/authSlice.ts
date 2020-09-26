@@ -16,9 +16,9 @@ interface authState {
 const initialState: authState = {
   isLoading: false,
   isLogined: false,
-  // user: 'semensemenich',
+  user: 'semensemenich',
   // user: 'victorid',
-  user: 'dengivseti',
+  // user: 'dengivseti',
   role: 'student',
   // role: 'author',
 };

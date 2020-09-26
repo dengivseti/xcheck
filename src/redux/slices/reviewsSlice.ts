@@ -91,3 +91,16 @@ export const saveReview = (review: IReview): AppThunk => async (dispatch) => {
   dispatch(clearReview());
   dispatch(setFetchFinish());
 };
+
+export const fetchReviewsUser = (user: string): AppThunk => async (
+  dispatch
+) => {
+  dispatch(setFetchStart());
+  const response = await axios.get(`${url}reviews?author=${user}`);
+  if (!response.data) {
+    //TODO обработка ошибок
+    dispatch(setReviews([]));
+    return;
+  }
+  dispatch(setReviews([...response.data]));
+};

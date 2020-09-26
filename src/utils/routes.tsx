@@ -12,6 +12,7 @@ import { CreateDispute } from '../pages/CreateDispute';
 import { EditTask } from '../pages/EditTask';
 import { EditRequest } from '../pages/EditRequest';
 import { EditReview } from '../pages/EditReview';
+import { Disputes } from '../pages/Disputes';
 
 export const useRoutes = (isAuth: boolean, role: typeRoles) => {
   if (!isAuth) {
@@ -30,12 +31,12 @@ export const useRoutes = (isAuth: boolean, role: typeRoles) => {
         <Route path="/review/:id/edit" exact component={EditReview} />
         <Route path="/reviews" exact component={Reviews} />
         <Route path="/review/:id" exact component={CreateDispute} />
+        <Route path="/disputes" exact component={Disputes} />
 
         {/*<Route path="/task/edit/:id" exact component={} />*/}
         {/*<Route path="/crosscheck/create" exact component={} />*/}
         {/*<Route path="/request/edit/:id" exact component={} />*/}
         {/*<Route path="/request/:id" exact component={} />*/}
-        {/*<Route path="/disputes" exact component={} />*/}
         {/*<Route path="/dispute/:id" exact component={} />*/}
         {/*<Redirect to="/tasks" />*/}
         <Redirect to="/tasks" />

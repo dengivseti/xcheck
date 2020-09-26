@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../store';
 import axios from 'axios';
-import { IDispute } from '../../interfaces/interfaces';
+import { IDispute, typeDispute } from '../../interfaces/interfaces';
 import { fetchReview } from './reviewsSlice';
 
 interface IDisputesState {
@@ -42,6 +42,14 @@ const disputes = createSlice({
     addDispute(state, action: PayloadAction<IDispute>) {
       state.disputes = [...state.disputes, action.payload];
     },
+    editDisputeState(
+      state,
+      action: PayloadAction<{ state: typeDispute; id: number }>
+    ) {
+      const { id } = action.payload;
+      const dispute = state.disputes.find((dispute) => dispute.id === id);
+      dispute.state = action.payload.state;
+    },
   },
 });
 
@@ -52,6 +60,7 @@ export const {
   setDispute,
   setDisputes,
   addDispute,
+  editDisputeState,
 } = disputes.actions;
 
 export default disputes.reducer;
@@ -96,4 +105,11 @@ export const saveDispute = (dispute: IDispute): AppThunk => async (
   }
   dispatch(clearDispute());
   dispatch(setFetchFinish());
+};
+
+export const editDispute = (state: typeDispute, id: number): AppThunk => async (
+  dispatch
+) => {
+  await axios.patch(`${url}disputes/${id}`, { state: state });
+  dispatch(editDisputeState({ state, id }));
 };

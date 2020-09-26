@@ -75,14 +75,36 @@ export const FormDispute: React.FC = () => {
     dispatch(saveDispute(value));
   };
 
-  const findDispute = (item) => {
+  const ButtonDispute = ({ item }) => {
     const dispute = disputes.find(
       (dispute) => dispute.idem === item.id && dispute.idReview === review.id
     );
-    if (dispute) {
-      return true;
+    if (!dispute) {
+      return (
+        <Button
+          type="primary"
+          onClick={() =>
+            ModalHandler({
+              idReview: review.id,
+              idRequest: review.idRequest,
+              idTask: review.idTask,
+              idem: item.id,
+              min: item.min,
+              max: item.max,
+            })
+          }
+        >
+          Обжаловать
+        </Button>
+      );
+    }
+
+    if (dispute.state === 'ACCEPTED') {
+      return <Button disabled={true}>Одобрен</Button>;
+    } else if (dispute.state === 'REJECTED') {
+      return <Button disabled={true}>Отклонен</Button>;
     } else {
-      return false;
+      return <Button disabled={true}>На обжаловании</Button>;
     }
   };
 
@@ -113,25 +135,7 @@ export const FormDispute: React.FC = () => {
                 title={`${item.title}: ${item.score} баллов`}
                 description={item.comment}
               />
-              {findDispute(item) ? (
-                <Button disabled={true}>На обжаловании</Button>
-              ) : (
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    ModalHandler({
-                      idReview: review.id,
-                      idRequest: review.idRequest,
-                      idTask: review.idTask,
-                      idem: item.id,
-                      min: item.min,
-                      max: item.max,
-                    })
-                  }
-                >
-                  Обжаловать
-                </Button>
-              )}
+              <ButtonDispute item={item} />
             </List.Item>
           )}
         />
@@ -139,7 +143,10 @@ export const FormDispute: React.FC = () => {
       <Button
         className={classes.button}
         type="primary"
-        disabled={disputes.find((dispute) => dispute.idReview === review.id)}
+        disabled={disputes.find(
+          (dispute) =>
+            dispute.idReview === review.id && dispute.state === 'ONGOING'
+        )}
       >
         Принять проверку
       </Button>
