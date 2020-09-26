@@ -17,7 +17,7 @@ const App = () => {
   }, shallowEqual);
   useEffect(() => {
     dispatch(checkAuth());
-  }, [user, role]);
+  }, [user, role, dispatch]);
 
   if (isLoading) {
     return <Loader />;

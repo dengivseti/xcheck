@@ -95,7 +95,7 @@ export const saveDispute = (dispute: IDispute): AppThunk => async (
   } else {
     response = await axios.patch(`${url}disputes/${dispute.id}`, dispute);
   }
-  if (response.data) {
+  if (!response.data) {
     console.log('RESPONSE:', response.data);
   }
   dispatch(clearDispute());

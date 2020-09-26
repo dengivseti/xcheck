@@ -55,7 +55,6 @@ export const fetchRequests = (): AppThunk => async (dispatch) => {
   dispatch(setFetchStart());
   const response = await axios.get(`${url}requests`);
   if (!response.data) {
-    //TODO обработка ошибок
     dispatch(setRequests([]));
     return;
   }
@@ -66,7 +65,6 @@ export const fetchRequest = (id: string): AppThunk => async (dispatch) => {
   dispatch(setFetchStart());
   const response = await axios.get(`${url}requests/${id}`);
   if (!response.data) {
-    //TODO обработка ошибок
     return;
   }
   await fetchTask(response.data.idTask);
@@ -83,8 +81,7 @@ export const saveRequest = (request: IReviewRequest): AppThunk => async (
   } else {
     response = await axios.patch(`${url}requests/${request.id}`, request);
   }
-  if (response.data) {
-    // TODO обработка ошибок
+  if (!response.data) {
     console.log('RESPONSE:', response.data);
   }
   dispatch(clearRequest());

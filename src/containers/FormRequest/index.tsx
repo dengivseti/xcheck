@@ -56,7 +56,7 @@ export const FormRequest: React.FC<IFormRequestProps> = (props) => {
         dispatch(fetchTask(params.id));
       }
     }
-  }, []);
+  }, [dispatch, isEdit, params, request, task]);
 
   const onFinish = async (itemsForm) => {
     const value: IReviewRequest = {
@@ -66,7 +66,7 @@ export const FormRequest: React.FC<IFormRequestProps> = (props) => {
       idTask: task.id,
       url: itemsForm.url,
       selfGrade: finalGrade,
-      crossCheckSessionId: '', // TODO ДОбавить crossCheckSessionId
+      crossCheckSessionId: '',
     };
     if (request && isEdit) {
       value.id = params.id;

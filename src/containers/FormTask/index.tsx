@@ -43,7 +43,7 @@ export const FormTask: React.FC = () => {
     if (!task && params.id) {
       dispatch(fetchTask(params.id));
     }
-  }, [params]);
+  }, [params, dispatch, task]);
 
   const onFinish = async (itemsForm) => {
     const value: ITask = {

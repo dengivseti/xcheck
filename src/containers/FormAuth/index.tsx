@@ -3,7 +3,7 @@ import classes from './FormAuth.module.scss';
 import { GithubOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message, Select } from 'antd';
 import { listSelectTypeRoles } from '../../utils/values';
-import { IAuthValue, typeRoles } from '../../interfaces/interfaces';
+import { typeRoles } from '../../interfaces/interfaces';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/slices/authSlice';
 
@@ -15,15 +15,10 @@ export const FormAuth: React.FC = () => {
   const [role, setRole] = useState<typeRoles>(listSelectTypeRoles[0].value);
 
   const buttonHandler = async () => {
-    const value: IAuthValue = {
-      githubId: username,
-      role,
-    };
     if (!username) {
       message.error('Input username');
       return;
     }
-    console.log(value);
     await dispatch(login(username, role));
     message.success(`Good authentication ${username}`);
   };

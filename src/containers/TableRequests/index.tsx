@@ -34,7 +34,7 @@ export const TableRequests: React.FC = () => {
     dispatch(fetchRequests());
     dispatch(fetchReviews());
     dispatch(fetchTasks());
-  }, []);
+  }, [dispatch]);
 
   const rowHandler = async (event, record: IReviewRequest) => {
     event.preventDefault();
@@ -89,7 +89,7 @@ export const TableRequests: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (idTask) => (
         <>
-          {tasks.map((task, int) => {
+          {tasks.forEach((task, int) => {
             if (+task.id === +idTask) {
               return <div key={int}>{task.title}</div>;
             }
@@ -116,7 +116,7 @@ export const TableRequests: React.FC = () => {
       sortDirections: ['descend', 'ascend'],
       render: (state) => (
         <>
-          {listStateRequest.map((item, int) => {
+          {listStateRequest.forEach((item, int) => {
             if (item.value === state) {
               return (
                 <Tag key={int} color={item.color}>

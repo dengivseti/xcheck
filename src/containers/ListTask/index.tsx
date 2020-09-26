@@ -8,7 +8,7 @@ import { List } from 'antd';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { TagStateTask } from '../../components/TagStateTask';
 import classes from './ListTask.module.scss';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export const ListTask: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,14 +24,13 @@ export const ListTask: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchTasks());
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
     return <Loader />;
   }
 
   const taskHandler = async (id) => {
-    // TODO В зависимости от роли открывается либо страница с редактированием задачи либо создание запроса на проверку
     const selectTask = tasks.find((task) => task.id === id);
     dispatch(setTask(selectTask));
     switch (role) {
@@ -43,13 +42,10 @@ export const ListTask: React.FC = () => {
           history.push(`/task/${id}/edit`);
           return;
         }
-      default:
-        break;
     }
   };
 
   if (!tasks) {
-    // TODO Добавить стили
     return <h2>Нет задач</h2>;
   }
   return (

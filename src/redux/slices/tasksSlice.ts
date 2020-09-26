@@ -55,7 +55,6 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
   dispatch(getFetchStart());
   const response = await axios.get(`${url}tasks`);
   if (!response.data) {
-    //TODO обработка ошибок
     dispatch(setTasks([]));
     return;
   }
@@ -66,7 +65,6 @@ export const fetchTask = (id: string): AppThunk => async (dispatch) => {
   dispatch(getFetchStart());
   const response = await axios.get(`${url}tasks/${id}`);
   if (!response.data) {
-    //TODO обработка ошибок
     return;
   }
   dispatch(setTask(response.data));
@@ -80,8 +78,7 @@ export const saveTask = (task: ITask): AppThunk => async (dispatch) => {
   } else {
     response = await axios.patch(`${url}tasks/${task.id}`, task);
   }
-  if (response.data) {
-    // TODO обработка ошибок
+  if (!response.data) {
     console.log('RESPONSE:', response.data);
   }
   dispatch(clearTask());

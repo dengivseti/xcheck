@@ -73,7 +73,7 @@ export const FormReview: React.FC<IFormReviewProps> = (props) => {
         dispatch(fetchRequest(params.id));
       }
     }
-  }, []);
+  }, [dispatch, isEdit, params.id, request, review, task]);
 
   if (isEdit && !review) {
     return <Loader />;

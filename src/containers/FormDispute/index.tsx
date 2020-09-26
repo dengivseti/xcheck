@@ -65,7 +65,7 @@ export const FormDispute: React.FC = () => {
     if (!task && !request && !review) {
       dispatch(fetchReview(params.id));
     }
-  }, []);
+  }, [dispatch, params.id, request, review, task]);
 
   const closeModal = () => {
     setVisible(false);
