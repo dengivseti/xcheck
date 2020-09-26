@@ -1,19 +1,16 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import classes from './Layout.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Layouts: React.FC = (props) => {
   const { Content, Sider } = Layout;
+  const location = useLocation();
+
   return (
     <Layout className={classes.layout}>
       <Sider theme="light">
-        <Menu
-          theme="light"
-          mode="inline"
-          // TODO проработать selectedKeys
-          // selectedKeys={[props.location.pathname]}
-        >
+        <Menu theme="light" mode="inline" selectedKeys={[location.pathname]}>
           <Menu.Item key="/tasks">
             <span>Задачи</span>
             <Link to="/tasks" />
