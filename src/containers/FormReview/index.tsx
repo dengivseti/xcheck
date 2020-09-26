@@ -54,6 +54,9 @@ export const FormReview: React.FC<IFormReviewProps> = (props) => {
       state: value.state,
       grade: finalGrade,
     };
+    if (review && isEdit) {
+      result.id = review.id;
+    }
     await dispatch(saveReview(result));
     history.push('/reviews');
   };
@@ -71,6 +74,10 @@ export const FormReview: React.FC<IFormReviewProps> = (props) => {
       }
     }
   }, []);
+
+  if (isEdit && !review) {
+    return <Loader />;
+  }
 
   if (isLoading || !task || !request) {
     return <Loader />;
@@ -90,7 +97,7 @@ export const FormReview: React.FC<IFormReviewProps> = (props) => {
       </Typography.Title>
       <h2>Статус</h2>
       <Form.Item
-        initialValue={isEdit ? review.state : null}
+        initialValue={isEdit && review ? review.state : 'DRAFT'}
         name="state"
         rules={[{ required: true, message: 'Missing state' }]}
       >
