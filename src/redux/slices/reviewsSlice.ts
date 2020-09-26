@@ -84,7 +84,6 @@ export const saveReview = (review: IReview): AppThunk => async (dispatch) => {
   if (response.data) {
     console.log('RESPONSE:', response.data);
   }
-  dispatch(clearReview());
   dispatch(setFetchFinish());
 };
 

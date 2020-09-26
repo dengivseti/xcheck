@@ -2,11 +2,13 @@ import React from 'react';
 import { Layout, Menu } from 'antd';
 import classes from './Layout.module.scss';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/slices/authSlice';
+import { RootState } from '../../redux/rootReducer';
 
 export const Layouts: React.FC = (props) => {
   const dispatch = useDispatch();
+  const role = useSelector((store: RootState) => store.auth.role);
   const { Content, Sider } = Layout;
   const location = useLocation();
 
@@ -18,22 +20,27 @@ export const Layouts: React.FC = (props) => {
             <span>Задачи</span>
             <Link to="/tasks" />
           </Menu.Item>
-          <Menu.Item key="/tasks/create">
-            <span>Создать задачу</span>
-            <Link to="/tasks/create" />
-          </Menu.Item>
-          <Menu.Item key="/requests">
-            <span>Запросы на проверку</span>
-            <Link to="/requests" />
-          </Menu.Item>
-          <Menu.Item key="/reviews">
-            <span>Оценки</span>
-            <Link to="/reviews" />
-          </Menu.Item>
-          <Menu.Item key="/disputes">
-            <span>Споры</span>
-            <Link to="/disputes" />
-          </Menu.Item>
+          {role === 'author' ? (
+            <Menu.Item key="/tasks/create">
+              <span>Создать задачу</span>
+              <Link to="/tasks/create" />
+            </Menu.Item>
+          ) : (
+            <>
+              <Menu.Item key="/requests">
+                <span>Запросы на проверку</span>
+                <Link to="/requests" />
+              </Menu.Item>
+              <Menu.Item key="/reviews">
+                <span>Оценки</span>
+                <Link to="/reviews" />
+              </Menu.Item>
+              <Menu.Item key="/disputes">
+                <span>Споры</span>
+                <Link to="/disputes" />
+              </Menu.Item>
+            </>
+          )}
           <Menu.Item key="/logout" onClick={() => dispatch(logout())}>
             <span>Выход</span>
           </Menu.Item>

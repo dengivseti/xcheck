@@ -7,7 +7,7 @@ import { Loader } from '../../components/Loader';
 import { fetchTasks, setTask } from '../../redux/slices/tasksSlice';
 import { fetchRequests, setRequest } from '../../redux/slices/requestsSlice';
 import { fetchReviews, setReview } from '../../redux/slices/reviewsSlice';
-import { IReview, ITaskItem } from '../../interfaces/interfaces';
+import { IReview } from '../../interfaces/interfaces';
 import { listStateReviews } from '../../utils/values';
 
 export const TableReviews: React.FC = () => {
@@ -38,6 +38,9 @@ export const TableReviews: React.FC = () => {
     dispatch(setReview(record));
     dispatch(setTask(selectTask));
     dispatch(setRequest(selectRequest));
+    if (record.state === 'ACCEPTED') {
+      return;
+    }
     if (record.author === user) {
       history.push(`/review/${record.id}/edit`);
     } else if (user === selectRequest.author) {

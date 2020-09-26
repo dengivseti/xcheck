@@ -30,3 +30,8 @@ export const listStateReviews: ISelectTypeStateReviews[] = [
   { value: 'DISPUTED', name: 'Спор', color: 'error' },
   { value: 'REJECTED', name: 'Отклонен', color: 'default' },
 ];
+
+export const listStateCreateReviews: ISelectTypeStateReviews[] = [
+  { value: 'DRAFT', name: 'Черновик', color: 'warning' },
+  { value: 'PUBLISHED', name: 'Опубликовано', color: 'processing' },
+];

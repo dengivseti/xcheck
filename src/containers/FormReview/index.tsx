@@ -7,7 +7,7 @@ import { Loader } from '../../components/Loader';
 import { Button, Divider, Form, Select, Typography } from 'antd';
 import { Grade } from '../Grade';
 import { IReview } from '../../interfaces/interfaces';
-import { listStateReviews } from '../../utils/values';
+import { listStateCreateReviews } from '../../utils/values';
 import { fetchRequest } from '../../redux/slices/requestsSlice';
 import { fetchReview, saveReview } from '../../redux/slices/reviewsSlice';
 import { ListGrade } from '../../components/ListGrade';
@@ -102,7 +102,7 @@ export const FormReview: React.FC<IFormReviewProps> = (props) => {
         rules={[{ required: true, message: 'Missing state' }]}
       >
         <Select placeholder="Выберите статус">
-          {listStateReviews.map((item) => (
+          {listStateCreateReviews.map((item) => (
             <Select.Option value={item.value} key={item.value}>
               {item.name}
             </Select.Option>

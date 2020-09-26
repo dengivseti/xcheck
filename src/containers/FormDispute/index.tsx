@@ -4,7 +4,7 @@ import { Button, Card, List, Typography } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/rootReducer';
-import { fetchReview } from '../../redux/slices/reviewsSlice';
+import { fetchReview, saveReview } from '../../redux/slices/reviewsSlice';
 import { Loader } from '../../components/Loader';
 import { ModalDispute } from '../../components/ModalDispute';
 import {
@@ -54,6 +54,12 @@ export const FormDispute: React.FC = () => {
     return data;
   };
 
+  const clickHandler = async () => {
+    const newReview = { ...review, state: 'ACCEPTED' };
+    await dispatch(saveReview(newReview));
+    history.push('/reviews');
+  };
+
   useEffect(() => {
     dispatch(fetchDisputes());
     if (!task && !request && !review) {
@@ -70,9 +76,10 @@ export const FormDispute: React.FC = () => {
     setValue(value);
   };
 
-  const saveDisputeHandler = (value) => {
-    dispatch(addDispute(value));
-    dispatch(saveDispute(value));
+  const saveDisputeHandler = async (value) => {
+    await dispatch(addDispute(value));
+    await dispatch(saveDispute(value));
+    await dispatch(saveReview({ ...review, state: 'DISPUTED' }));
   };
 
   const ButtonDispute = ({ item }) => {
@@ -147,6 +154,7 @@ export const FormDispute: React.FC = () => {
           (dispute) =>
             dispute.idReview === review.id && dispute.state === 'ONGOING'
         )}
+        onClick={clickHandler}
       >
         Принять проверку
       </Button>
