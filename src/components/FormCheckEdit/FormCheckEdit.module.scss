@@ -1,6 +1,5 @@
 .space {
   display: flex;
-  marginBottom: 5px;
 }
 
 .id {
@@ -20,10 +19,11 @@
 .root {
   margin: 2rem 0 4rem 0;
 }
-.h2 {
-  padding-left: 10px;
-}
 
 .button {
  margin-left: 10px;
+}
+
+.hide {
+  display: none;
 }
