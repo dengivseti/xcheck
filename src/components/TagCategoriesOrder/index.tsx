@@ -19,7 +19,7 @@ export const TagCategoriesOrder: React.FC<ITagProps> = ({
 
   useEffect(() => {
     onTag(tags);
-  }, [tags, onTag]);
+  }, [tags]);
 
   const handleEditInputConfirm = () => {
     const newTags = [...tags];

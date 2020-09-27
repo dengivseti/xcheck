@@ -9,6 +9,7 @@ import { fetchRequests, setRequest } from '../../redux/slices/requestsSlice';
 import { fetchReviews, setReview } from '../../redux/slices/reviewsSlice';
 import { IReview } from '../../interfaces/interfaces';
 import { listStateReviews } from '../../utils/values';
+import {setClear} from "../../redux/slices/GradeSlice";
 
 export const TableReviews: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,10 +25,11 @@ export const TableReviews: React.FC = () => {
   });
 
   useEffect(() => {
+    dispatch(setClear());
     dispatch(fetchTasks());
     dispatch(fetchRequests());
     dispatch(fetchReviews());
-  }, [dispatch]);
+  }, []);
 
   const rowHandler = (event, record: IReview) => {
     event.preventDefault();

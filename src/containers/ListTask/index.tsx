@@ -24,7 +24,7 @@ export const ListTask: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchTasks());
-  }, [dispatch]);
+  }, []);
 
   if (isLoading) {
     return <Loader />;

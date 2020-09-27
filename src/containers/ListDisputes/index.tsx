@@ -84,13 +84,13 @@ export const ListDisputes: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchDisputes());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (disputes) {
       dispatch(fetchReviewsUser(user));
     }
-  }, [disputes, dispatch, user]);
+  }, []);
 
   if (isLoading) {
     return <Loader />;

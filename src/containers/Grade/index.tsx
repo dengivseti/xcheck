@@ -35,8 +35,9 @@ export const Grade: React.FC<IGradeProps> = ({
   );
 
   useEffect(() => {
+    console.log('u grade')
     dispatch(setInitialValue({ items, grade, type }));
-  }, [dispatch, grade, items, type]);
+  }, []);
 
   const solutionHandler = (obj) => {
     dispatch(setfinalGrade(obj));

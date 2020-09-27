@@ -34,7 +34,7 @@ export const TableRequests: React.FC = () => {
     dispatch(fetchRequests());
     dispatch(fetchReviews());
     dispatch(fetchTasks());
-  }, [dispatch]);
+  }, []);
 
   const rowHandler = async (event, record: IReviewRequest) => {
     event.preventDefault();

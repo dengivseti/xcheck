@@ -56,7 +56,7 @@ export const FormRequest: React.FC<IFormRequestProps> = (props) => {
         dispatch(fetchTask(params.id));
       }
     }
-  }, [dispatch, isEdit, params, request, task]);
+  }, []);
 
   const onFinish = async (itemsForm) => {
     const value: IReviewRequest = {
